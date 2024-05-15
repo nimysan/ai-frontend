@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import theme from "./flowbite-theme";
 import { Flowbite } from "flowbite-react";
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import SignInPage from "./pages/authentication/sign-in";
 import SignUpPage from "./pages/authentication/sign-up";
