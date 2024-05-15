@@ -27,7 +27,7 @@ jobs:
       run: zip -r dist.zip dist
 
     - name: Create Release
-      uses: ncipollo/release-action@v1
+      uses: softprops/action-gh-release@v1
       with:
         artifacts: "dist.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
