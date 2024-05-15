@@ -1,12 +1,11 @@
 export const isAuthenticated = () => {
+  // debugger;
   const loggedInUser = localStorage.getItem("userData");
   if (loggedInUser) {
     // debugger;
     const foundUser = JSON.parse(loggedInUser);
-    console.log(" --- " + foundUser);
-    return true;
+    return foundUser;
   }
-  return false;
 };
 
 export const loginOut = () => {

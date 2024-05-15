@@ -1,6 +1,5 @@
 {
-  "type": "module",
-  "name": "flowbite-react-admin-dashboard",
+  "name": "ai-frontend",
   "version": "1.0.0",
   "descrption": "flowbite-react admin dashboard",
   "homepage": "https://github.com/themesberg/flowbite-react-admin-dashboard",

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm i && npm run build
+npm install --global yarn && npm i && npm run build

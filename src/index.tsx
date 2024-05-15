@@ -4,9 +4,8 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import theme from "./flowbite-theme";
 import { Flowbite } from "flowbite-react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, useNavigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import DashboardPage from "./pages";
 import SignInPage from "./pages/authentication/sign-in";
 import SignUpPage from "./pages/authentication/sign-up";
 import EcommerceProductsPage from "./pages/e-commerce/products";
@@ -16,6 +15,11 @@ import UserListPage from "./pages/users/list";
 import PrivateRoute from "./private-route";
 import isAuthenticated from "./auth";
 
+import { setupInterceptorsTo } from "./Interceptors";
+import axios from "axios";
+
+setupInterceptorsTo(axios);
+
 const container = document.getElementById("root");
 
 if (!container) {
@@ -24,12 +28,24 @@ if (!container) {
 
 const root = createRoot(container);
 const isAuth = isAuthenticated();
+
 root.render(
   <StrictMode>
     <Flowbite theme={{ theme }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<DashboardPage />} index />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute
+                isAuthenticated={isAuth}
+                authenticationPath="/authentication/sign-in"
+              >
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
+          {/* <Route path="/" element={<ChatPage />} index /> */}
           <Route path="/authentication/sign-in" element={<SignInPage />} />
           <Route path="/authentication/sign-up" element={<SignUpPage />} />
           <Route

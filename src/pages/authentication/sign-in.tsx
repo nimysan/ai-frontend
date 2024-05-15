@@ -1,19 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import { loginOut } from "../../auth";
 
 const SignInPage: FC = function () {
-  loginOut();
+  // loginOut();
 
   interface LoginFormData {
     email: string;
     password: string;
   }
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const authenticateUser = async (email: any, password: any) => {
     try {
       const response = await axios.post("/user/login", {
@@ -25,10 +26,12 @@ const SignInPage: FC = function () {
 
       // 将用户数据存储在 localStorage 中
       localStorage.setItem("userData", JSON.stringify(userData.user));
-
+      localStorage.setItem("authToken", userData.user.user_token);
+      setErrorMessage("");
       return userData;
     } catch (error) {
-      console.error("Authentication failed:", error);
+      // console.error("Authentication failed:", error);
+      setErrorMessage("Authentication failed.");
       throw error;
     }
   };
@@ -41,10 +44,9 @@ const SignInPage: FC = function () {
   const onSubmit = async (data: LoginFormData) => {
     // 在这里执行身份验证逻辑，例如向服务器发送请求
     const isAuthenticated = await authenticateUser(data.email, data.password);
-
     if (isAuthenticated) {
       // 如果身份验证成功，则导航到首页
-      navigate("/");
+      navigate("/bedrock/chat");
     } else {
       // 如果身份验证失败，则显示错误消息或执行其他操作
       console.error("Authentication failed");
@@ -73,7 +75,7 @@ const SignInPage: FC = function () {
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4 flex flex-col gap-y-3">
-            <Label htmlFor="email">Your email</Label>
+            <Label htmlFor="email">Your username</Label>
             <Controller
               name="email"
               control={control}
@@ -84,7 +86,8 @@ const SignInPage: FC = function () {
                   {...field}
                   id="email"
                   type="text"
-                  placeholder="请输入邮箱地址"
+                  defaultValue="admin"
+                  placeholder="请输入登录用户名"
                   required={true}
                 />
               )}
@@ -121,14 +124,16 @@ const SignInPage: FC = function () {
               Login to your account
             </Button>
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-300">
+          {errorMessage && (
+            <div className="mb-4 text-red-500">{errorMessage}</div>
+          )}
+          <p className="hidden text-sm text-gray-500 dark:text-gray-300">
             Not registered?&nbsp;
             <a href="#" className="text-primary-600 dark:text-primary-300">
               Create account
             </a>
           </p>
         </form>
-        {/* <p>{JSON.stringify(errors)}</p> */}
       </Card>
     </div>
   );
