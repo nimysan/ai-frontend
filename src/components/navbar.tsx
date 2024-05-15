@@ -22,6 +22,13 @@ const ExampleNavbar: FC = function () {
               width="90"
               className="hidden sm:block"
             />
+            {/* <iframe
+              height="30"
+              src="https://github.com/nimysan/AIServer"
+              title="GitHub-AI"
+              width="90"
+              className="hidden sm:block"
+            /> */}
             {/* <Button color="primary" href="https://flowbite.com/pro/">
               Upgrade to Pro
             </Button> */}

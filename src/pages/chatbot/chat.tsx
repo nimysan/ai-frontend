@@ -78,11 +78,20 @@ const ChatDialog = () => {
         (obj) => obj.item_key === "prompt_rag"
       );
       // debugger;
-      const response = await axios.post("/api/bedrock/rag", {
-        input: question,
-        prompt: prompt_rag_obj?.item_value,
-      });
-      pushToList(question, response.data.result.response.output.text);
+      const response = await axios.post(
+        "/api/bedrock/" + (useKnowledgebase ? "rag" : "chat"),
+        {
+          input: question,
+          prompt: prompt_rag_obj?.item_value,
+        }
+      );
+      // debugger;
+      pushToList(
+        question,
+        useKnowledgebase
+          ? response.data.result.response.output.text
+          : response.data.result.content[0].text
+      );
       setQuestion(""); //clean the input
     } catch (error) {
       console.log("Error is " + error);
@@ -139,12 +148,12 @@ const ChatDialog = () => {
             </div>
           </div>
         </div>
-        <div className="mx-auto w-full items-center rounded-lg" id="content">
+        <div className="mx-auto mt-5 w-full rounded-lg">
           <ToggleSwitch
             checked={useKnowledgebase}
             label={"With Knowledge base"}
             onChange={function (checked: boolean): void {
-              console.log(checked);
+              // console.log(checked);
               setUseKnowledgebase(checked);
             }}
           ></ToggleSwitch>

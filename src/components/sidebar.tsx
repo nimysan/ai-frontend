@@ -8,7 +8,6 @@ import {
   HiInformationCircle,
   HiLogin,
   HiOutlineChat,
-  HiPencil,
   HiSearch,
 } from "react-icons/hi";
 import isAuthenticated from "../auth";
@@ -90,9 +89,9 @@ const ExampleSidebar: FC = function () {
               <Sidebar.Item href="/authentication/sign-in" icon={HiLogin}>
                 {isAuth ? "Login Out" : "Sign In"}
               </Sidebar.Item>
-              <Sidebar.Item href="/authentication/sign-up" icon={HiPencil}>
+              {/* <Sidebar.Item href="/authentication/sign-up" icon={HiPencil}>
                 Sign up
-              </Sidebar.Item>
+              </Sidebar.Item> */}
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
               <Sidebar.Item
